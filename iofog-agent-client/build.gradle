@@ -1,0 +1,38 @@
+plugins {
+    id "com.github.johnrengelman.shadow"
+}
+
+description = 'iofog-agent-client'
+configurations {
+    // configuration that holds jars to include in the jar
+    extraLibs
+}
+dependencies {
+    compile 'org.slf4j:slf4j-nop:1.7.13'
+	extraLibs ('javax.json:javax.json-api:1.0', 'org.glassfish:javax.json:1.1.4')
+	configurations.compile.extendsFrom(configurations.extraLibs)
+}
+
+processResources {
+    expand(project.properties)
+}
+
+build {
+    dependsOn shadowJar
+}
+
+task copyJar(type: Copy) {
+    from ("$buildDir/libs/") {
+        include "*-all.jar"
+    }
+    into file('../packaging/iofog-agent/usr/bin/')
+    rename('.*?(jar$)', 'iofog-agent.jar')
+}
+
+jar {
+    from {
+    	configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+	manifest.attributes["Main-Class"] = 'org.eclipse.iofog.Client'
+	manifest.attributes["Implementation-Version"] = project.property('version')
+}
