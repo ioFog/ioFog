@@ -25,7 +25,7 @@ task copyJar(type: Copy) {
     from ("$buildDir/libs/") {
         include "*-all.jar"
     }
-    into file('../packaging/iofog-agent/usr/bin/')
+    into file('../packaging/datasance/iofog-agent/usr/bin/')
     rename('.*?(jar$)', 'iofog-agent.jar')
 }
 

@@ -100,7 +100,7 @@ jobs:
           fi
 
       - name: Login to Github Container Registry
-        if: (github.ref == 'refs/heads/develop') || contains(github.ref_name, '^v.*')
+        if: (github.ref == 'refs/heads/main') || contains(github.ref_name, '^v.*')
         uses: docker/login-action@v2
         with:
           registry: "ghcr.io"
@@ -108,7 +108,7 @@ jobs:
           password: ${{ github.token }}
 
       - name: Build and Push to ghcr
-        if: (github.ref == 'refs/heads/develop') || contains(github.ref_name, '^v.*')
+        if: (github.ref == 'refs/heads/main') || contains(github.ref_name, '^v.*')
         uses: docker/build-push-action@v3
         id: build_push_ghcr
         with:
@@ -117,7 +117,7 @@ jobs:
           tags: |
             ghcr.io/datasance/${{ env.IMAGE_NAME }}:${{ steps.tags.outputs.VERSION }}
             ghcr.io/datasance/${{ env.IMAGE_NAME }}:latest
-            ghcr.io/datasance/${{ env.IMAGE_NAME }}:develop
+            ghcr.io/datasance/${{ env.IMAGE_NAME }}:main
 
       - name: Set up Ruby 3.1.4
         uses: actions/setup-ruby@v1
@@ -148,7 +148,7 @@ jobs:
         shell: bash
         id: create_deb_package
         run: |
-          cd packaging/iofog-agent
+          cd packaging/datasance/iofog-agent
           fpm -s dir -d 'openjdk-8-jdk | openjdk-11-jdk' -d docker -t deb -n iofog-agent -v ${{ steps.pkg_version.outputs.version }} -a all --deb-no-default-config-files --after-install debian.sh --after-remove remove.sh --before-upgrade upgrade.sh --after-upgrade debian.sh etc usr
           echo "pkg created"
           ls
@@ -156,7 +156,7 @@ jobs:
         shell: bash
         id: create_rpm_package
         run: |
-          cd packaging/iofog-agent
+          cd packaging/datasance/iofog-agent
           fpm -s dir --depends java-11-openjdk -d docker-ce -t rpm -n iofog-agent -v ${{ steps.pkg_version.outputs.version }} -a all --rpm-os 'linux' --after-install rpm.sh --after-remove remove.sh --before-upgrade upgrade.sh --after-upgrade rpm.sh etc usr;
           echo "pkg created"
           ls
