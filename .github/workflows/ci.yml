@@ -148,7 +148,7 @@ jobs:
         shell: bash
         id: create_deb_package
         run: |
-          cd packaging/datasance/iofog-agent
+          cd packaging/iofog-agent
           fpm -s dir -d 'openjdk-8-jdk | openjdk-11-jdk' -d docker -t deb -n iofog-agent -v ${{ steps.pkg_version.outputs.version }} -a all --deb-no-default-config-files --after-install debian.sh --after-remove remove.sh --before-upgrade upgrade.sh --after-upgrade debian.sh etc usr
           echo "pkg created"
           ls
@@ -156,7 +156,7 @@ jobs:
         shell: bash
         id: create_rpm_package
         run: |
-          cd packaging/datasance/iofog-agent
+          cd packaging/iofog-agent
           fpm -s dir --depends java-11-openjdk -d docker-ce -t rpm -n iofog-agent -v ${{ steps.pkg_version.outputs.version }} -a all --rpm-os 'linux' --after-install rpm.sh --after-remove remove.sh --before-upgrade upgrade.sh --after-upgrade rpm.sh etc usr;
           echo "pkg created"
           ls
@@ -164,7 +164,7 @@ jobs:
         name: Upload deb package
         with:
           name: deb-package
-          path: packaging/datasance/iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
+          path: packaging/iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
 
       - uses: bluwy/substitute-string-action@v1
         id: sub
@@ -177,7 +177,7 @@ jobs:
         name: Upload rpm package
         with:
           name: rpm-package
-          path: packaging/datasance/iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
+          path: packaging/iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
 
       - uses: actions/download-artifact@v2
         with:

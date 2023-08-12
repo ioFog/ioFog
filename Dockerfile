@@ -50,8 +50,8 @@ RUN true && \
 
 RUN echo "securerandom.source=file:/dev/urandom" >> /etc/alternatives/jre/lib/security/java.security
 
-COPY --from=builder packaging/datasance/iofog-agent/etc /etc
-COPY --from=builder packaging/datasance/iofog-agent/usr /usr
+COPY --from=builder packaging/iofog-agent/etc /etc
+COPY --from=builder packaging/iofog-agent/usr /usr
 
 RUN true && \
     useradd -r -U -s /usr/bin/nologin iofog-agent && \
