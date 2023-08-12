@@ -80,8 +80,8 @@ public class ConfigurationTest {
     @Before
     public void setUp() throws Exception {
         MODULE_NAME = "Configuration";
-        MOCK_CONFIG_SWITCHER_PATH = "../packaging/datasance/iofog-agent/etc/iofog-agent/config-switcher_new.xml";
-        MOCK_DEFAULT_CONFIG_PATH = "../packaging/datasance/iofog-agent/etc/iofog-agent/config_new.xml";
+        MOCK_CONFIG_SWITCHER_PATH = "../packaging/iofog-agent/etc/iofog-agent/config-switcher_new.xml";
+        MOCK_DEFAULT_CONFIG_PATH = "../packaging/iofog-agent/etc/iofog-agent/config_new.xml";
         ORIGINAL_DEFAULT_CONFIG_PATH = DEFAULT_CONFIG_PATH;
         ORIGINAL_CONFIG_SWITCHER_PATH = CONFIG_SWITCHER_PATH;
         mockStatic(Configuration.class, Mockito.CALLS_REAL_METHODS);
