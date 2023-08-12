@@ -42,7 +42,7 @@ public class CmdPropertiesTest {
 
     @Test
     public void getVersionMessage() {
-        assertEquals("ioFog %s \nCopyright (C) 2022 Edgeworx, Inc. \nEclipse ioFog is provided under the Eclipse Public License 2.0 (EPL-2.0) \nhttps://www.eclipse.org/legal/epl-v20.html",
+        assertEquals("ioFog %s \nCopyright (C) 2023 Datasance Teknoloji A.S. \nEclipse ioFog is provided under the Eclipse Public License 2.0 (EPL-2.0) \nhttps://www.eclipse.org/legal/epl-v20.html",
                 CmdProperties.getVersionMessage());
     }
 
