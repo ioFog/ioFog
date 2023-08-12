@@ -164,7 +164,7 @@ jobs:
         name: Upload deb package
         with:
           name: deb-package
-          path: /iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
+          path: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
 
       - uses: bluwy/substitute-string-action@v1
         id: sub
@@ -177,7 +177,7 @@ jobs:
         name: Upload rpm package
         with:
           name: rpm-package
-          path: /iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
+          path: iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
 
       - uses: actions/download-artifact@v2
         with:
