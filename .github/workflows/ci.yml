@@ -189,7 +189,21 @@ jobs:
           PACKAGE-NAME: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
           PACKAGECLOUD-USERNAME: datasance
           PACKAGECLOUD-REPO: iofog-agent
-          PACKAGECLOUD-DISTRIB: any/any
+          PACKAGECLOUD-DISTRIB: |
+            any/any
+            ubuntu/focal
+            ubuntu/xenial
+            ubuntu/bionic
+            ubuntu/trusty
+            ubuntu/jammy
+            ubuntu/lunar
+            debian/stretch
+            debian/buster
+            debian/bullseye
+            debian/bookworm
+            raspbian/stretch
+            raspbian/buster
+            raspbian/bullseye 
           PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
 
       - uses: actions/download-artifact@v2
@@ -202,7 +216,16 @@ jobs:
           PACKAGE-NAME: iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
           PACKAGECLOUD-USERNAME: datasance
           PACKAGECLOUD-REPO: iofog-agent
-          PACKAGECLOUD-DISTRIB: rpm_any/rpm_any
+          PACKAGECLOUD-DISTRIB: |
+            rpm_any/rpm_any
+            fedora/35
+            fedora/36
+            fedora/37
+            fedora/38
+            el/6
+            el/7
+            el/8
+            el/9
           PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
 
       - name: Upload Agent Artifact
