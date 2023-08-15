@@ -39,9 +39,8 @@ jobs:
 #        cache: 'gradle'
     - uses: gradle/gradle-build-action@v2
       with:
-        arguments: build
-    - name: Execute Gradle copyJar
-      run: ./gradlew copyJar
+        arguments: build copyJar
+
 
   Integration:
     runs-on: ubuntu-20.04
