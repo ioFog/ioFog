@@ -39,7 +39,10 @@ jobs:
 #        cache: 'gradle'
     - uses: gradle/gradle-build-action@v2
       with:
-        arguments: build copyJar
+        arguments: build
+    - name: List contents of build directory before copy
+      run: |
+        ls -R ${{ github.workspace }}
 
 
   Integration:
