@@ -48,7 +48,7 @@ jobs:
         arguments: copyJar
     - name: List contents of destination directory after copy
       run: |
-        ls -R ../packaging/iofog-agent/usr/bin/
+        ls -R ls -R ${{ github.workspace }}
 
 
   Integration:
