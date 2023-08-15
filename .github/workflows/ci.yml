@@ -40,15 +40,6 @@ jobs:
     - uses: gradle/gradle-build-action@v2
       with:
         arguments: build copyJar
-    - name: List contents of build directory before copy
-      run: |
-        ls -R ${{ github.workspace }}
-    - uses: gradle/gradle-build-action@v2
-      with:
-        arguments: copyJar
-    - name: List contents of destination directory after copy
-      run: |
-        ls -R ls -R ${{ github.workspace }}
 
 
   Integration:
