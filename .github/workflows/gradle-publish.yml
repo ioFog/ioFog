@@ -41,9 +41,7 @@ jobs:
       with:
         arguments: build copyJar
 
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
+
     - name: 'Get Previous tag'
       id: previoustag
       uses: "WyriHaximus/github-action-get-previous-tag@v1"
@@ -94,3 +92,6 @@ jobs:
         fpm -s dir -d 'openjdk-8-jdk | openjdk-11-jdk' -d docker -t deb -n iofog-agent -v ${{ steps.pkg_version.outputs.version }} -a all --deb-no-default-config-files --after-install debian.sh --after-remove remove.sh --before-upgrade upgrade.sh --after-upgrade debian.sh etc usr
         echo "pkg created"
         ls -R
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
