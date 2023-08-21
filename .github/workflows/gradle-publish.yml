@@ -43,3 +43,32 @@ jobs:
     - name: List contents of build directory before copy
       run: |
         ls -R ${{ github.workspace }}
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: 'Get Previous tag'
+      id: previoustag
+      uses: "WyriHaximus/github-action-get-previous-tag@v1"
+      with:
+        fallback: 0.0.0
+    - name: Set image tag
+      shell: bash
+      id: tags
+      run: |
+        if [[ ${{ github.ref_name }} =~ ^v.* ]] ; then
+          VERSION=${{ github.ref_name }}
+          echo "VERSION=${VERSION:1}" >> "${GITHUB_OUTPUT}"
+        else
+            VERSION=${{ steps.previoustag.outputs.tag }}
+            echo "VERSION=${VERSION:1}-${{ github.run_number }}" >> "${GITHUB_OUTPUT}"
+        fi
+    - run: echo ${{ steps.version.outputs.version }}
+    - name: Create deb package
+      shell: bash
+      id: create_deb_package
+      run: |
+        cd ${{ github.workspace }}/packaging/iofog-agent
+        ls
+        fpm -s dir -d 'openjdk-8-jdk | openjdk-11-jdk' -d docker -t deb -n iofog-agent -v ${{ steps.pkg_version.outputs.version }} -a all --deb-no-default-config-files --after-install debian.sh --after-remove remove.sh --before-upgrade upgrade.sh --after-upgrade debian.sh etc usr
+        echo "pkg created"
+        ls
