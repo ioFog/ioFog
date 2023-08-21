@@ -40,9 +40,7 @@ jobs:
     - uses: gradle/gradle-build-action@v2
       with:
         arguments: build copyJar
-    - name: List contents of build directory before copy
-      run: |
-        ls -R ${{ github.workspace }}
+
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
@@ -62,13 +60,37 @@ jobs:
             VERSION=${{ steps.previoustag.outputs.tag }}
             echo "VERSION=${VERSION:1}-${{ github.run_number }}" >> "${GITHUB_OUTPUT}"
         fi
+    - name: Set up Ruby 3.1.4
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 3.1.4
+    - run: |
+        gem install --no-document fpm
+        fpm -h
+    - name: Install package_Cloud
+      run: |
+        gem install package_cloud
+        package_cloud -h
+    - name: get gradle version
+      shell: bash
+      id: version
+      run: echo "version=$(./gradlew properties --no-daemon --console=plain -q | grep "^version:" | awk '{printf $2}')"  >> "${GITHUB_OUTPUT}"
+    - name: get package version
+      shell: bash
+      id: pkg_version
+      run: |
+        if [[ ${{ github.ref_name }} =~ ^v.* ]] ; then
+          echo "version=${{ steps.version.outputs.version }}" >> "${GITHUB_OUTPUT}"
+        else
+          echo "version=${{ steps.version.outputs.version }}-${{ github.run_number }}" >> "${GITHUB_OUTPUT}"
+        fi
     - run: echo ${{ steps.version.outputs.version }}
     - name: Create deb package
       shell: bash
       id: create_deb_package
       run: |
         cd ${{ github.workspace }}/packaging/iofog-agent
-        ls
+        ls -R
         fpm -s dir -d 'openjdk-8-jdk | openjdk-11-jdk' -d docker -t deb -n iofog-agent -v ${{ steps.pkg_version.outputs.version }} -a all --deb-no-default-config-files --after-install debian.sh --after-remove remove.sh --before-upgrade upgrade.sh --after-upgrade debian.sh etc usr
         echo "pkg created"
-        ls
+        ls -R
