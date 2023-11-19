@@ -43,7 +43,7 @@ jobs:
       with:
         arguments: build copyJar
         #gradele-version: https://docs.gradle.org/current/userguide/compatibility.html
-        grade-version: 7.3
+        #grade-version: 7.3
 
     - name: 'Get Previous tag'
       id: previoustag
