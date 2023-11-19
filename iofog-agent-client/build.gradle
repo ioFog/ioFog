@@ -8,11 +8,11 @@ configurations {
     extraLibs
 }
 dependencies {
-    //compile 'org.slf4j:slf4j-nop:1.7.13'
-    implementation 'org.slf4j:slf4j-nop:1.7.13'
+    compile 'org.slf4j:slf4j-nop:1.7.13'
+    //implementation 'org.slf4j:slf4j-nop:1.7.13'
 	extraLibs ('javax.json:javax.json-api:1.0', 'org.glassfish:javax.json:1.1.4')
-	//configurations.compile.extendsFrom(configurations.extraLibs)
-    configurations.compileClasspath.extendsFrom(configurations.extraLibs)
+	configurations.compile.extendsFrom(configurations.extraLibs)
+    //configurations.compileClasspath.extendsFrom(configurations.extraLibs)
 }
 
 processResources {
@@ -32,7 +32,7 @@ task copyJar(type: Copy) {
 }
 
 jar {
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE // add dublicate strategy
+    //duplicatesStrategy = DuplicatesStrategy.INCLUDE // add dublicate strategy
     from {
     	configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
     }
