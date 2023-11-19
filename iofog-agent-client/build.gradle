@@ -32,6 +32,7 @@ task copyJar(type: Copy) {
 }
 
 jar {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE // add dublicate strategy
     from {
     	configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
     }
