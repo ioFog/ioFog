@@ -360,8 +360,18 @@ jobs:
     - name: Upload Agent Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: agent
-        path: packaging/**/*
+        name: Agent
+        path: ${{ github.workspace }}/dist
+    
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+      
+    - name: Publish package
+      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+      with:
+        arguments: publish
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
     - uses: actions/checkout@v3
       with:
