@@ -123,11 +123,12 @@ jobs:
         fpm -s dir --depends java-11-openjdk -d docker-ce -t rpm -n iofog-agent -v ${{ steps.pkg_version.outputs.version }} -a all --rpm-os 'linux' --after-install rpm.sh --after-remove remove.sh --before-upgrade upgrade.sh --after-upgrade rpm.sh etc usr;
         echo "pkg created"
         ls
-    - uses: actions/upload-artifact@v2
+    - uses: jasonetco/upload-to-release@v0.1.1
       name: Upload deb package
       with:
-        name: deb-package
-        path: packaging/iofog-agent/iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
+        arg: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
     - uses: bluwy/substitute-string-action@v1
       id: sub
@@ -136,11 +137,12 @@ jobs:
         '-': _
     - run: echo ${{ steps.sub.outputs.result }}
 
-    - uses: actions/upload-artifact@v2
+    - uses: jasonetco/upload-to-release@v0.1.1
       name: Upload rpm package
       with:
-        name: rpm-package
-        path: packaging/iofog-agent/iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
+        arg: iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
     - uses: actions/download-artifact@v2
       with:
@@ -169,14 +171,6 @@ jobs:
         PACKAGECLOUD-DISTRIB: rpm_any/rpm_any
         PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
 
-
-    - name: Upload Agent Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: Agent
-        path: ${{ github.workspace }}/dist
-        username: ${{ github.actor }}
-        password: ${{ secrets.GH_PAT }}
 
     - uses: actions/checkout@v3
       with:
