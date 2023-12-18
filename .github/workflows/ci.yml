@@ -45,15 +45,11 @@ jobs:
     - uses: actions/setup-java@v3
       with:
         java-version: '8'
-        #java-version: '17'
-        #distributrion https://github.com/actions/setup-java#supported-distributions
         distribution: 'temurin'
 #        cache: 'gradle'
     - uses: gradle/gradle-build-action@v2
       with:
         arguments: build copyJar
-        #gradele-version: https://docs.gradle.org/current/userguide/compatibility.html
-        #grade-version: 7.3
 
     - name: 'Get Previous tag'
       id: previoustag
@@ -133,11 +129,6 @@ jobs:
         fpm -s dir --depends java-11-openjdk -d docker-ce -t rpm -n iofog-agent -v ${{ steps.pkg_version.outputs.version }} -a all --rpm-os 'linux' --after-install rpm.sh --after-remove remove.sh --before-upgrade upgrade.sh --after-upgrade rpm.sh etc usr;
         echo "pkg created"
         ls
-    - uses: actions/upload-artifact@v2
-      name: Upload deb package
-      with:
-        name: deb-package
-        path: packaging/iofog-agent/iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
 
     - uses: bluwy/substitute-string-action@v1
       id: sub
@@ -146,234 +137,30 @@ jobs:
         '-': _
     - run: echo ${{ steps.sub.outputs.result }}
 
-    - uses: actions/upload-artifact@v2
-      name: Upload rpm package
-      with:
-        name: rpm-package
-        path: packaging/iofog-agent/iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
-
     - uses: actions/download-artifact@v2
       with:
         name: deb-package
 
-    - name: Publish deb package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: any/any
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish deb package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: ubuntu/focal
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish deb package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: ubuntu/xenial
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish deb package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: ubuntu/bionic
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish deb package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB:  ubuntu/trusty
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish deb package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: ubuntu/groovy
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish deb package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: ubuntu/jammy
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish deb package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: ubuntu/lunar
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish deb package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB:  debian/stretch
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish deb package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: debian/buster
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish deb package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: debian/bullseye
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish deb package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: debian/bookworm
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish deb package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB:  raspbian/stretch
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish deb package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: raspbian/buster
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish deb package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: raspbian/bullseye
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
 
     - uses: actions/download-artifact@v2
       with:
         name: rpm-package
 
-    - name: Publish rpm package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
+    - name: Upload release
+      if: github.event_name != 'pull_request'
+      uses: boxpositron/upload-multiple-releases@1.0.7
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
       with:
-        PACKAGE-NAME: iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: rpm_any/rpm_any
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish rpm package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: fedora/36
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish rpm package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: fedora/37
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish rpm package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: fedora/38
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish rpm package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: el/6
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish rpm package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: el/7
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish rpm package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: el/8
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Publish rpm package to packagecloud
-      uses: danielmundi/upload-packagecloud@v1
-      with:
-        PACKAGE-NAME: iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
-        PACKAGECLOUD-USERNAME: datasance
-        PACKAGECLOUD-REPO: iofog-agent
-        PACKAGECLOUD-DISTRIB: el/9
-        PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
-
-    - name: Upload Agent Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: Agent
-        path: ${{ github.workspace }}/dist
-        username: ${{ github.actor }}
-        password: ${{ secrets.GH_PAT }}
+        release_config: |
+          iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
+          iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb  
+          iofog-agent.zip
+        tag_name: ${{ steps.sub.outputs.result }}
+        release_name: iofog-agent_v${{ steps.sub.outputs.result }}
+        draft: false
+        prerelease: false
+        overwrite: true  
 
     - uses: actions/checkout@v3
       with:
