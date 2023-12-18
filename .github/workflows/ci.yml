@@ -137,15 +137,6 @@ jobs:
         '-': _
     - run: echo ${{ steps.sub.outputs.result }}
 
-    - uses: actions/download-artifact@v2
-      with:
-        name: deb-package
-
-
-    - uses: actions/download-artifact@v2
-      with:
-        name: rpm-package
-
     - name: Upload release
       if: github.event_name != 'pull_request'
       uses: boxpositron/upload-multiple-releases@1.0.7
