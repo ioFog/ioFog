@@ -147,6 +147,7 @@ jobs:
         upload_url: release/${{ steps.tags.outputs.VERSION }} 
         asset_path: packaging/iofog-agent/iofog-agent_3.0.1_all.deb
         asset_name: iofog-agent_3.0.1_all.deb
+        asset_content_type: artifact/deb
 
     - name: Upload Rpm Release Asset
       id: upload-release-asset-rpm 
@@ -157,6 +158,7 @@ jobs:
         upload_url: release/${{ steps.tags.outputs.VERSION }}
         asset_path: packaging/iofog-agent/iofog-agent-3.0.1-1.noarch.rpm
         asset_name: iofog-agent-3.0.1-1.noarch.rpm
+        asset_content_type: artifact/rpm
 
 
     - uses: actions/checkout@v3
