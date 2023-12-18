@@ -144,7 +144,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        upload_url: release/${{ steps.tags.outputs.VERSION }} 
         asset_path: packaging/iofog-agent/iofog-agent_3.0.1_all.deb
         asset_name: iofog-agent_3.0.1_all.deb
 
@@ -154,7 +154,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        upload_url: release/${{ steps.tags.outputs.VERSION }}
         asset_path: packaging/iofog-agent/iofog-agent-3.0.1-1.noarch.rpm
         asset_name: iofog-agent-3.0.1-1.noarch.rpm
 
