@@ -137,21 +137,10 @@ jobs:
         '-': _
     - run: echo ${{ steps.sub.outputs.result }}
 
-    - name: Upload release
-      if: github.event_name != 'pull_request'
-      uses: boxpositron/upload-multiple-releases@1.0.7
-      env:
-        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+    - name: Release
+      uses: softprops/action-gh-release@v1
       with:
-        release_config: |
-          iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
-          iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb  
-          iofog-agent.zip
-        tag_name: ${{ steps.sub.outputs.result }}
-        release_name: iofog-agent_v${{ steps.sub.outputs.result }}
-        draft: false
-        prerelease: false
-        overwrite: true  
+        files: release/*
 
     - uses: actions/checkout@v3
       with:
