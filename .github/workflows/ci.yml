@@ -139,7 +139,7 @@ jobs:
 
 
     - name: Upload Deb Release Asset
-      id: upload-release-asset 
+      id: upload-release-asset-deb
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
@@ -149,7 +149,7 @@ jobs:
         asset_name: iofog-agent_3.0.1_all.deb
 
     - name: Upload Rpm Release Asset
-      id: upload-release-asset 
+      id: upload-release-asset-rpm 
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
