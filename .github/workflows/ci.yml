@@ -137,29 +137,13 @@ jobs:
         '-': _
     - run: echo ${{ steps.sub.outputs.result }}
 
-
-    - name: Upload Deb Release Asset
-      id: upload-release-asset-deb
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
       with:
-        upload_url: release/${{ steps.tags.outputs.VERSION }} 
-        asset_path: packaging/iofog-agent/iofog-agent_3.0.1_all.deb
-        asset_name: iofog-agent_3.0.1_all.deb
-        asset_content_type: artifact/deb
-
-    - name: Upload Rpm Release Asset
-      id: upload-release-asset-rpm 
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-      with:
-        upload_url: release/${{ steps.tags.outputs.VERSION }}
-        asset_path: packaging/iofog-agent/iofog-agent-3.0.1-1.noarch.rpm
-        asset_name: iofog-agent-3.0.1-1.noarch.rpm
-        asset_content_type: artifact/rpm
-
+        files: |
+          iofog-agent_3.0.1_all.deb
+          iofog-agent-3.0.1-1.noarch.rpm
 
     - uses: actions/checkout@v3
       with:
