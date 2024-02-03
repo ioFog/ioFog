@@ -17,7 +17,7 @@
 	<router_host />
 	<router_port/>
 
-	<controller_url>http://localhost:51121/api/v3/</controller_url>
+	<controller_url>http://localhost:51121/api/v1/</controller_url>
 	
 	<iofog_uuid/>
 	<secure_mode>off</secure_mode>
