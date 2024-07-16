@@ -40,6 +40,10 @@ dependencies {
     //testImplementation 'org.powermock:powermock-core:2.0.2'
 }
 
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:deprecation"
+}
+
 processResources {
     expand(project.properties)
 }
