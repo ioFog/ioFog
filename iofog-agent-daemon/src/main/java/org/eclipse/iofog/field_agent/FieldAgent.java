@@ -35,6 +35,7 @@ import org.eclipse.iofog.proxy.SshProxyManager;
 import org.eclipse.iofog.pruning.DockerPruningManager;
 import org.eclipse.iofog.status_reporter.StatusReporter;
 import org.eclipse.iofog.utils.Constants;
+import org.eclipse.iofog.utils.Constants.ControllerStatus;
 import org.eclipse.iofog.utils.Orchestrator;
 import org.eclipse.iofog.utils.configuration.Configuration;
 import org.eclipse.iofog.utils.functional.Pair;
@@ -991,7 +992,14 @@ public class FieldAgent implements IOFogModule {
             microservice.setArgs(getStringList(argsValue));
 
             JsonValue devicesValue = jsonObj.get("devices");
-            microservice.setDevices(getStringList(devicesValue));
+            if (devicesValue != null && !devicesValue.getValueType().equals(JsonValue.ValueType.NULL)) {
+            List<Device> devices = getStringList(devicesValue).stream()
+                .map(deviceString -> new Device(deviceString))  // Convert each string to a Device object
+                .collect(Collectors.toList());
+            microservice.setDevices(devices);
+            } else {
+            microservice.setDevices(null);  // Set to null if no devices are specified
+            }
 
             JsonValue extraHostsValue = jsonObj.get("extraHosts");
             microservice.setExtraHosts(getStringList(extraHostsValue));

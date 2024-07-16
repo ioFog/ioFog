@@ -728,7 +728,7 @@ public class DockerUtil {
             }
         }
 
-        if (microservice.getRuntime() != null && microservice.getRuntime().size() > 0) {
+        if (!microservice.getRuntime().isEmpty()) {
             hostConfig.withRuntime(microservice.getRuntime());
         }
 
@@ -740,11 +740,11 @@ public class DockerUtil {
             cmd = cmd.withCmd(microservice.getArgs());
         }
 
-        if (microservice.getRunAsUser() != null && microservice.getRunAsUser().size() > 0) {
+        if (!microservice.getRunAsUser().isEmpty()) {
             cmd = cmd.withUser(microservice.getRunAsUser());
         }
 
-        if (microservice.getPlatform() != null && microservice.getPlatform().size() > 0) {
+        if (!microservice.getPlatform().isEmpty()) {
             cmd = cmd.withPlatform(microservice.getPlatform());
         }
 
