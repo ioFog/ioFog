@@ -20,12 +20,34 @@
   *
   */
 
-public class Device {
+  public class Device {
+    private String name;
+    private String path;
+
+    public Device(String name, String path) {
+        this.name = name;
+        this.path = path;
+    }
+
+    // Add getters and setters for the name and path fields
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 
     @Override
     public String toString() {
-        return "Device []";
+        return "Device{name='" + name + "', path='" + path + "'}";
     }
-    
-    
 }

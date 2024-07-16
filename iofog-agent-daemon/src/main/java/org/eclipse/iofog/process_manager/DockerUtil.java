@@ -732,8 +732,11 @@ public class DockerUtil {
             hostConfig.withRuntime(microservice.getRuntime());
         }
 
-        if (microservice.getDevices() != null && microservice.getDevices().size() > 0) {
-            hostConfig.withDevices(microservice.getDevices());
+        if (microservice.getDevices() != null && !microservice.getDevices().isEmpty()) {
+            List<Device> devices = microservice.getDevices().stream()
+                .map(dev -> new Device(dev.getPath(), dev.getPath(), null, ""))
+                .collect(Collectors.toList());
+            hostConfig.withDevices(devices);
         }
 
         if (microservice.getArgs() != null && microservice.getArgs().size() > 0) {

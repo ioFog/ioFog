@@ -993,12 +993,16 @@ public class FieldAgent implements IOFogModule {
 
             JsonValue devicesValue = jsonObj.get("devices");
             if (devicesValue != null && !devicesValue.getValueType().equals(JsonValue.ValueType.NULL)) {
-            List<Device> devices = getStringList(devicesValue).stream()
-                .map(deviceString -> new Device(deviceString))  // Convert each string to a Device object
-                .collect(Collectors.toList());
-            microservice.setDevices(devices);
+                JsonArray devicesArray = devicesValue.asJsonArray();
+                List<Device> devices = devicesArray.stream()
+                    .map(jsonValue -> {
+                        JsonObject deviceObj = jsonValue.asJsonObject();
+                        return new Device(deviceObj.getString("name"), deviceObj.getString("path"));
+                    })
+                    .collect(Collectors.toList());
+                microservice.setDevices(devices);
             } else {
-            microservice.setDevices(null);  // Set to null if no devices are specified
+                microservice.setDevices(null);  // Set to null if no devices are specified
             }
 
             JsonValue extraHostsValue = jsonObj.get("extraHosts");
