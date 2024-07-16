@@ -13,7 +13,7 @@
 
 package org.eclipse.iofog.network;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.eclipse.iofog.exception.AgentSystemException;
 import org.eclipse.iofog.process_manager.DockerUtil;
 import org.eclipse.iofog.utils.configuration.Configuration;
