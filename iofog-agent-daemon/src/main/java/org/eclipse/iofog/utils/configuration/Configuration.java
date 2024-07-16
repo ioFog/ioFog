@@ -159,7 +159,7 @@ public final class Configuration {
                 monitorContainersStatusFreqSeconds = 30;
                 monitorRegistriesStatusFreqSeconds = 120;
                 getUsageDataFreqSeconds = 20;
-                dockerApiVersion = "1.24";
+                dockerApiVersion = "1.46";
                 setSystemTimeFreqSeconds = 60;
                 monitorSshTunnelStatusFreqSeconds = 30;
                 break;
@@ -170,7 +170,7 @@ public final class Configuration {
                 monitorContainersStatusFreqSeconds = 10;
                 monitorRegistriesStatusFreqSeconds = 60;
                 getUsageDataFreqSeconds = 5;
-                dockerApiVersion = "1.24";
+                dockerApiVersion = "1.46";
                 setSystemTimeFreqSeconds = 60;
                 monitorSshTunnelStatusFreqSeconds = 10;
                 break;

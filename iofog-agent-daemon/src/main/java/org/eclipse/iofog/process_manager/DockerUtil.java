@@ -728,9 +728,26 @@ public class DockerUtil {
             }
         }
 
+        if (microservice.getRuntime() != null && microservice.getRuntime().size() > 0) {
+            hostConfig.withRuntime(microservice.getRuntime());
+        }
+
+        if (microservice.getDevices() != null && microservice.getDevices().size() > 0) {
+            hostConfig.withDevices(microservice.getDevices());
+        }
+
         if (microservice.getArgs() != null && microservice.getArgs().size() > 0) {
             cmd = cmd.withCmd(microservice.getArgs());
         }
+
+        if (microservice.getRunAsUser() != null && microservice.getRunAsUser().size() > 0) {
+            cmd = cmd.withUser(microservice.getRunAsUser());
+        }
+
+        if (microservice.getPlatform() != null && microservice.getPlatform().size() > 0) {
+            cmd = cmd.withPlatform(microservice.getPlatform());
+        }
+
         cmd = cmd.withHostConfig(hostConfig);
         CreateContainerResponse resp;
         try {

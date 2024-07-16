@@ -923,6 +923,9 @@ public class FieldAgent implements IOFogModule {
         return jsonObj -> {
             Microservice microservice = new Microservice(jsonObj.getString("uuid"), jsonObj.getString("imageId"));
             microservice.setConfig(jsonObj.getString("config"));
+            microservice.setRunAsUser(jsonObj.getString("runAsUser"));
+            microservice.setPlatform(jsonObj.getString("platform"));
+            microservice.setRuntime(jsonObj.getString("runtime"));
             microservice.setRebuild(jsonObj.getBoolean("rebuild"));
             microservice.setRootHostAccess(jsonObj.getBoolean("rootHostAccess"));
             microservice.setRegistryId(jsonObj.getInt("registryId"));
@@ -986,6 +989,9 @@ public class FieldAgent implements IOFogModule {
 
             JsonValue argsValue = jsonObj.get("cmd");
             microservice.setArgs(getStringList(argsValue));
+
+            JsonValue devicesValue = jsonObj.get("devices");
+            microservice.setDevices(getStringList(devicesValue));
 
             JsonValue extraHostsValue = jsonObj.get("extraHosts");
             microservice.setExtraHosts(getStringList(extraHostsValue));
