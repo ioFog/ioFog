@@ -1369,12 +1369,12 @@ public final class Configuration {
         } catch (ConfigurationItemException e) {
             System.out.println("invalid configuration item(s).");
             System.out.println(e.getMessage());
-            System.out.println(ExceptionUtils.getFullStackTrace(e));
+            System.out.println(ExceptionUtils.getStackTrace(e));
             System.exit(1);
         } catch (Exception e) {
             System.out.println("Error while parsing " + Constants.CONFIG_SWITCHER_PATH);
             System.out.println(e.getMessage());
-            System.out.println(ExceptionUtils.getFullStackTrace(e));
+            System.out.println(ExceptionUtils.getStackTrace(e));
             System.exit(1);
         }
 
@@ -1383,12 +1383,12 @@ public final class Configuration {
         } catch (ConfigurationItemException e) {
             System.out.println("invalid configuration item(s).");
             System.out.println(e.getMessage());
-            System.out.println(ExceptionUtils.getFullStackTrace(e));
+            System.out.println(ExceptionUtils.getStackTrace(e));
             System.exit(1);
         } catch (Exception e) {
             System.out.println("Error while parsing " + Configuration.getCurrentConfigPath());
             System.out.println(e.getMessage());
-            System.out.println(ExceptionUtils.getFullStackTrace(e));
+            System.out.println(ExceptionUtils.getStackTrace(e));
             System.exit(1);
         }
 

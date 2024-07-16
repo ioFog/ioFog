@@ -52,7 +52,7 @@ public class LogFormatter extends Formatter {
 		jsonObjectBuilder.add("message", record.getMessage());
 		if (record.getThrown() != null) {
 			jsonObjectBuilder.add("exception_message", record.getThrown().getLocalizedMessage());
-			jsonObjectBuilder.add("stacktrace", ExceptionUtils.getFullStackTrace(record.getThrown()));
+			jsonObjectBuilder.add("stacktrace", ExceptionUtils.getStackTrace(record.getThrown()));
 		}
 		return jsonObjectBuilder.build().toString().concat("\n");
 	}

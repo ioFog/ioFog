@@ -121,7 +121,7 @@ public class Daemon {
         } catch (IOException e) {
             System.out.println("Error starting logging service");
             System.out.println(e.getMessage());
-            System.out.println(ExceptionUtils.getFullStackTrace(e));
+            System.out.println(ExceptionUtils.getStackTrace(e));
             System.exit(1);
         }
         LoggingService.logInfo(MODULE_NAME, "Configuration loaded.");
@@ -181,7 +181,7 @@ public class Daemon {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println(ExceptionUtils.getFullStackTrace(e));
+            System.out.println(ExceptionUtils.getStackTrace(e));
         }
     }
 

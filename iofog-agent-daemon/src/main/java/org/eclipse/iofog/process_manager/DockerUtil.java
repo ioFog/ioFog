@@ -341,7 +341,7 @@ public class DockerUtil {
             }
         } catch (Exception e) {
             LoggingService.logWarning(MODULE_NAME, "Error occurred while getting container status of microservice uuid" + microserviceUuid +
-                    " error : " + ExceptionUtils.getFullStackTrace(e));
+                    " error : " + ExceptionUtils.getStackTrace(e));
         }
         LoggingService.logDebug(MODULE_NAME , "Finished get microservice status for microservice uuid : "+ microserviceUuid);
         return result;
