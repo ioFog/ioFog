@@ -733,8 +733,8 @@ public class DockerUtil {
         }
 
         if (microservice.getDevices() != null && !microservice.getDevices().isEmpty()) {
-            List<Device> devices = microservice.getDevices().stream()
-                .map(dev -> new Device(dev.getPath(), dev.getPath(), null, ""))
+            List<com.github.dockerjava.api.model.Device> devices = microservice.getDevices().stream()
+                .map(dev -> new com.github.dockerjava.api.model.Device(dev.getPath(), dev.getPath(), null, ""))
                 .collect(Collectors.toList());
             hostConfig.withDevices(devices);
         }
