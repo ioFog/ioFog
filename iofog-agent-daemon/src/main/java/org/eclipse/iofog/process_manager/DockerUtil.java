@@ -23,7 +23,8 @@ import com.github.dockerjava.api.model.Ports.Binding;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientBuilder;
 import com.github.dockerjava.core.DockerClientConfig;
-import com.github.dockerjava.core.command.EventsResultCallback;
+import com.github.dockerjava.api.async.ResultCallback.Adapter;
+import javafx.scene.image.Image;
 import com.github.dockerjava.api.command.PullImageResultCallback;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -121,7 +122,7 @@ public class DockerUtil {
      */
     private void addDockerEventHandler() {
     	LoggingService.logDebug(MODULE_NAME , "Starting docker events handler");
-        dockerClient.eventsCmd().exec(new EventsResultCallback() {
+        dockerClient.eventsCmd().exec(new ResultCallback.Adapter<Event>() {
             @Override
             public void onNext(Event item) {
                 switch (item.getType()) {
