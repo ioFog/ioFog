@@ -991,8 +991,8 @@ public class FieldAgent implements IOFogModule {
             JsonValue argsValue = jsonObj.get("cmd");
             microservice.setArgs(getStringList(argsValue));
 
-            JsonValue devicesValue = jsonObj.get("devices");
-            microservice.setDevices(getStringList(devicesValue));
+            JsonValue cidDevsValue = jsonObj.get("cidDevs");
+            microservice.setCidDevs(getStringList(cidDevsValue));
 
             JsonValue extraHostsValue = jsonObj.get("extraHosts");
             microservice.setExtraHosts(getStringList(extraHostsValue));

@@ -735,10 +735,10 @@ public class DockerUtil {
             hostConfig.withRuntime(microservice.getRuntime());
         }
 
-        if (microservice.getDevices() != null && !microservice.getDevices().isEmpty()) {
-            List<String> deviceIds = microservice.getDevices()
+        if (microservice.getCidDevs() != null && !microservice.getCidDevs().isEmpty()) {
+            List<String> deviceIds = microservice.getCidDevs()
                     .stream()
-                    .map(org.eclipse.iofog.microservice.Device::getName)
+                    .map(cidDevs::getName)
                     .collect(Collectors.toList());
             DeviceRequest deviceRequest = new DeviceRequest()
                     .withDriver("cdi")
