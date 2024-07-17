@@ -208,6 +208,9 @@ public class DockerUtilTest {
         PowerMockito.when(createContainerCmd.withExposedPorts(any(ExposedPort.class))).thenReturn(createContainerCmd);
         PowerMockito.when(createContainerCmd.withVolumes(any(Volume.class))).thenReturn(createContainerCmd);
         PowerMockito.when(createContainerCmd.withCmd(any(List.class))).thenReturn(createContainerCmd);
+        PowerMockito.when(createContainerCmd.withRuntime(anyString())).thenReturn(createContainerCmd);
+        PowerMockito.when(createContainerCmd.withPlatform(anyString())).thenReturn(createContainerCmd);
+        PowerMockito.when(createContainerCmd.withUser(anyString())).thenReturn(createContainerCmd);
         PowerMockito.when(createContainerCmd.withHostConfig(any(HostConfig.class))).thenReturn(createContainerCmd);
         PowerMockito.when(createContainerCmd.exec()).thenReturn(createContainerResponse);
         PowerMockito.when(createContainerResponse.getId()).thenReturn(containerID);
