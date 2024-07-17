@@ -23,6 +23,9 @@ import com.github.dockerjava.api.model.Ports.Binding;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientBuilder;
 import com.github.dockerjava.core.DockerClientConfig;
+
+import javafx.scene.image.Image;
+
 import com.github.dockerjava.api.async.ResultCallback;
 import com.github.dockerjava.api.command.PullImageResultCallback;
 import org.apache.commons.lang3.SystemUtils;
@@ -733,10 +736,14 @@ public class DockerUtil {
         }
 
         if (microservice.getDevices() != null && !microservice.getDevices().isEmpty()) {
-            List<com.github.dockerjava.api.model.Device> devices = microservice.getDevices().stream()
-                .map(dev -> new com.github.dockerjava.api.model.Device(dev.getPath(), dev.getPath(), null, ""))
-                .collect(Collectors.toList());
-            hostConfig.withDevices(devices);
+            List<String> deviceIds = microservice.getDevices()
+                    .stream()
+                    .map(Device::getName)
+                    .collect(Collectors.toList());
+            DeviceRequest deviceRequest = new DeviceRequest()
+                    .withDriver("cdi")
+                    .withDeviceIds(deviceIds);
+            hostConfig.withDeviceRequests(Collections.singletonList(deviceRequest));
         }
 
         if (microservice.getArgs() != null && microservice.getArgs().size() > 0) {

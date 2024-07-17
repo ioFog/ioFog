@@ -11,43 +11,21 @@
  *
  */
 
- package org.eclipse.iofog.microservice;
+package org.eclipse.iofog.microservice;
 
- /**
-  * represents Microservices devices 
-  * 
-  * @author emirhandurmus
-  *
-  */
+/**
+ * represents Microservices env variables
+ * 
+ * @author emirhandurmus
+ *
+ */
 
-  public class Device {
-    private String name;
-    private String path;
-
-    public Device(String name, String path) {
-        this.name = name;
-        this.path = path;
-    }
-
-    // Add getters and setters for the name and path fields
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
+public class Device {
 
     @Override
     public String toString() {
-        return "Device{name='" + name + "', path='" + path + "'}";
+        return "Device []";
     }
+    
+    
 }
