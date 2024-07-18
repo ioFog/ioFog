@@ -645,7 +645,7 @@ public class FieldAgentTest {
                     .add("volumeMappings", volumeMappingsJson)
                     .add("env", envJson)
                     .add("cmd", cmdJson)
-                    .add("cdiDevs", cdiDevsJson)
+                    .add("cdiDevices", cdiDevsJson)
                     .build();
             JsonArray jsonMicorserviceArray = Json.createArrayBuilder().add(microserviceObject).build();
             jsonObject = jsonObjectBuilder
