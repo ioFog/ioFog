@@ -626,6 +626,7 @@ public class FieldAgentTest {
             JsonArray volumeMappingsJson = Json.createArrayBuilder().add(volumeMappingsObject).build();
             JsonArray cmdJson = Json.createArrayBuilder().add("cmd").add("sh").build();
             JsonArray envJson = Json.createArrayBuilder().add(envObject).build();
+            JsonArray cdiDevsJson = Json.createArrayBuilder().add("cdiDev").add("vendor.com/class=device-name").build();
             JsonObject microserviceObject = jsonObjectBuilder
                     .add("uuid", "uuid")
                     .add("imageId", "imageId")
@@ -633,6 +634,9 @@ public class FieldAgentTest {
                     .add("rebuild", false)
                     .add("delete", false)
                     .add("rootHostAccess", false)
+                    .add("platform", "platform")
+                    .add("runtime", "runtime")
+                    .add("runAsUser", "runAsUser")
                     .add("deleteWithCleanup", false)
                     .add("registryId", 1)
                     .add("logSize", 2123l)
@@ -641,6 +645,7 @@ public class FieldAgentTest {
                     .add("volumeMappings", volumeMappingsJson)
                     .add("env", envJson)
                     .add("cmd", cmdJson)
+                    .add("cdiDevs", cdiDevsJson)
                     .build();
             JsonArray jsonMicorserviceArray = Json.createArrayBuilder().add(microserviceObject).build();
             jsonObject = jsonObjectBuilder

@@ -728,12 +728,12 @@ public class DockerUtil {
             }
         }
 
-        if (!microservice.getRuntime().isEmpty()) {
+        if (microservice.getRuntime() != null && !microservice.getRuntime().isEmpty()) {
             hostConfig.withRuntime(microservice.getRuntime());
         }
 
-        if (microservice.getCidDevs() != null && !microservice.getCidDevs().isEmpty()) {
-            List<String> deviceIds = microservice.getCidDevs();
+        if (microservice.getCdiDevs() != null && microservice.getCdiDevs().isEmpty()) {
+            List<String> deviceIds = microservice.getCdiDevs();
             DeviceRequest deviceRequest = new DeviceRequest()
                     .withDriver("cdi")
                     .withDeviceIds(deviceIds);
@@ -744,11 +744,11 @@ public class DockerUtil {
             cmd = cmd.withCmd(microservice.getArgs());
         }
 
-        if (!microservice.getRunAsUser().isEmpty()) {
+        if (microservice.getRunAsUser() != null && !microservice.getRunAsUser().isEmpty()) {
             cmd = cmd.withUser(microservice.getRunAsUser());
         }
 
-        if (!microservice.getPlatform().isEmpty()) {
+        if (microservice.getPlatform() != null && !microservice.getPlatform().isEmpty()) {
             cmd = cmd.withPlatform(microservice.getPlatform());
         }
 

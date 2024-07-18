@@ -40,7 +40,7 @@ public class Microservice {
     private boolean isUpdating;
     private List<EnvVar> envVars;
     private List<String> args;
-    private List<String> cidDevs;
+    private List<String> cdiDevs;
     private List<String> extraHosts;
     private boolean isConsumer;
 
@@ -190,9 +190,9 @@ public class Microservice {
 
     public void setArgs(List<String> args) { this.args = args; }
 
-    public List<String> getCidDevs() { return cidDevs; }
+    public List<String> getCdiDevs() { return cdiDevs; }
 
-    public void setCidDevs(List<String> cidDevs) { this.cidDevs = cidDevs; }
+    public void setCdiDevs(List<String> cdiDevs) { this.cdiDevs = cdiDevs; }
 
     @Override
     public boolean equals(Object e) {
