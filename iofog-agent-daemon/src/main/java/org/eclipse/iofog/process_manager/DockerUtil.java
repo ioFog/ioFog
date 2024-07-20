@@ -732,7 +732,7 @@ public class DockerUtil {
             hostConfig.withRuntime(microservice.getRuntime());
         }
 
-        if (microservice.getCdiDevs() != null && microservice.getCdiDevs().isEmpty()) {
+        if (microservice.getCdiDevs() != null && !microservice.getCdiDevs().isEmpty()) {
             List<String> deviceIds = microservice.getCdiDevs();
             DeviceRequest deviceRequest = new DeviceRequest()
                     .withDriver("cdi")
