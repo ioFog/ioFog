@@ -114,7 +114,7 @@ jobs:
       id: create_deb_package
       run: |
         cd packaging/iofog-agent
-        fpm -s dir -d 'openjdk-8-jdk | openjdk-11-jdk | openjdk-17-jdk' -d docker  -t deb -n iofog-agent -v ${{ steps.pkg_version.outputs.version }} -a all --deb-no-default-config-files --after-install debian.sh --after-remove remove.sh --before-upgrade upgrade.sh --after-upgrade debian.sh etc usr
+        fpm -s dir -d 'openjdk-8-jdk | openjdk-11-jdk | openjdk-17-jdk' -d docker-ce  -t deb -n iofog-agent -v ${{ steps.pkg_version.outputs.version }} -a all --deb-no-default-config-files --after-install debian.sh --after-remove remove.sh --before-upgrade upgrade.sh --after-upgrade debian.sh etc usr
         echo "pkg created"
         ls
     - name: Create rpm package
