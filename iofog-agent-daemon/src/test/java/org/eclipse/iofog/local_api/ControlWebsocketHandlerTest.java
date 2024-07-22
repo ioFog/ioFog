@@ -33,7 +33,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.util.HashMap;
 import java.util.Map;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.HOST;
+import static io.netty.handler.codec.http.HttpHeaderNames.HOST;
 import static org.junit.Assert.*;
 /**
  * @author nehanaithani

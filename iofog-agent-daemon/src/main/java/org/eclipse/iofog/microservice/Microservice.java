@@ -26,6 +26,9 @@ public class Microservice {
     private final String imageName;
     private List<PortMapping> portMappings;
     private String config;
+    private String runAsUser;
+    private String platform;
+    private String runtime;
     private List<String> routes;
     private String containerId;
     private int registryId;
@@ -37,6 +40,7 @@ public class Microservice {
     private boolean isUpdating;
     private List<EnvVar> envVars;
     private List<String> args;
+    private List<String> cdiDevs;
     private List<String> extraHosts;
     private boolean isConsumer;
 
@@ -96,6 +100,30 @@ public class Microservice {
 
     public void setConfig(String config) {
         this.config = config;
+    }
+
+    public String getRunAsUser() {
+        return runAsUser;
+    }
+
+    public void setRunAsUser(String runAsUser) {
+        this.runAsUser = runAsUser;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public String getRuntime() {
+        return runtime;
+    }
+
+    public void setRuntime(String runtime) {
+        this.runtime = runtime;
     }
 
     public String getMicroserviceUuid() {
@@ -161,6 +189,10 @@ public class Microservice {
     public List<String> getArgs() { return args; }
 
     public void setArgs(List<String> args) { this.args = args; }
+
+    public List<String> getCdiDevs() { return cdiDevs; }
+
+    public void setCdiDevs(List<String> cdiDevs) { this.cdiDevs = cdiDevs; }
 
     @Override
     public boolean equals(Object e) {

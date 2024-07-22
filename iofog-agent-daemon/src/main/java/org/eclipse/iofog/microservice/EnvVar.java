@@ -14,7 +14,7 @@
 package org.eclipse.iofog.microservice;
 
 /**
- * represents Microservices port mappings
+ * represents Microservices env variables
  * 
  * @author saeid
  *

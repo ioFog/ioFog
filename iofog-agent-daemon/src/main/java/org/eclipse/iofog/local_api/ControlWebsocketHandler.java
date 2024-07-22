@@ -24,7 +24,7 @@ import org.eclipse.iofog.utils.logging.LoggingService;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.HOST;
+import static io.netty.handler.codec.http.HttpHeaderNames.HOST;
 
 /**
  * Handler for the real-time control websocket Open real-time control websocket

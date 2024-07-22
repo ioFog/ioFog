@@ -14,7 +14,7 @@ package org.eclipse.iofog.field_agent;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang.SystemUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.eclipse.iofog.IOFogModule;
 import org.eclipse.iofog.command_line.util.CommandShellExecutor;
 import org.eclipse.iofog.command_line.util.CommandShellResultSet;
@@ -35,6 +35,7 @@ import org.eclipse.iofog.proxy.SshProxyManager;
 import org.eclipse.iofog.pruning.DockerPruningManager;
 import org.eclipse.iofog.status_reporter.StatusReporter;
 import org.eclipse.iofog.utils.Constants;
+import org.eclipse.iofog.utils.Constants.ControllerStatus;
 import org.eclipse.iofog.utils.Orchestrator;
 import org.eclipse.iofog.utils.configuration.Configuration;
 import org.eclipse.iofog.utils.functional.Pair;
@@ -62,7 +63,7 @@ import static io.netty.util.internal.StringUtil.isNullOrEmpty;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 import static java.util.stream.Collectors.toList;
-import static org.apache.commons.lang.StringUtils.rightPad;
+import static org.apache.commons.lang3.StringUtils.rightPad;
 import static org.eclipse.iofog.command_line.CommandLineConfigParam.*;
 import static org.eclipse.iofog.resource_manager.ResourceManager.*;
 import static org.eclipse.iofog.utils.CmdProperties.*;
@@ -923,6 +924,16 @@ public class FieldAgent implements IOFogModule {
         return jsonObj -> {
             Microservice microservice = new Microservice(jsonObj.getString("uuid"), jsonObj.getString("imageId"));
             microservice.setConfig(jsonObj.getString("config"));
+            if (!jsonObj.isNull("runAsUser")) {
+                microservice.setRunAsUser(jsonObj.getString("runAsUser"));
+            }
+            if (!jsonObj.isNull("platform")) {
+                microservice.setPlatform(jsonObj.getString("platform"));
+            }
+    
+            if (!jsonObj.isNull("runtime")) {
+                microservice.setRuntime(jsonObj.getString("runtime"));
+            }
             microservice.setRebuild(jsonObj.getBoolean("rebuild"));
             microservice.setRootHostAccess(jsonObj.getBoolean("rootHostAccess"));
             microservice.setRegistryId(jsonObj.getInt("registryId"));
@@ -986,6 +997,9 @@ public class FieldAgent implements IOFogModule {
 
             JsonValue argsValue = jsonObj.get("cmd");
             microservice.setArgs(getStringList(argsValue));
+
+            JsonValue cdiDevsValue = jsonObj.get("cdiDevices");
+            microservice.setCdiDevs(getStringList(cdiDevsValue));
 
             JsonValue extraHostsValue = jsonObj.get("extraHosts");
             microservice.setExtraHosts(getStringList(extraHostsValue));

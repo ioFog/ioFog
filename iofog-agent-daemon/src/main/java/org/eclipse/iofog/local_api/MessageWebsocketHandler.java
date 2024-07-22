@@ -12,7 +12,7 @@
  */
 package org.eclipse.iofog.local_api;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.HOST;
+import static io.netty.handler.codec.http.HttpHeaderNames.HOST;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.util.Map;

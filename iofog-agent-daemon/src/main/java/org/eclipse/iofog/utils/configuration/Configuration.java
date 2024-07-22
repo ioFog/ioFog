@@ -12,9 +12,9 @@
  */
 package org.eclipse.iofog.utils.configuration;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.SystemUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.SystemUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.eclipse.iofog.command_line.CommandLineConfigParam;
 import org.eclipse.iofog.exception.AgentSystemException;
 import org.eclipse.iofog.exception.AgentUserException;
@@ -57,7 +57,7 @@ import static java.io.File.separatorChar;
 import static java.lang.String.format;
 import static java.util.Arrays.stream;
 import static java.util.Collections.list;
-import static org.apache.commons.lang.StringUtils.*;
+import static org.apache.commons.lang3.StringUtils.*;
 import static org.eclipse.iofog.command_line.CommandLineConfigParam.*;
 import static org.eclipse.iofog.utils.CmdProperties.*;
 import static org.eclipse.iofog.utils.Constants.*;
@@ -159,7 +159,7 @@ public final class Configuration {
                 monitorContainersStatusFreqSeconds = 30;
                 monitorRegistriesStatusFreqSeconds = 120;
                 getUsageDataFreqSeconds = 20;
-                dockerApiVersion = "1.23";
+                dockerApiVersion = "1.45";
                 setSystemTimeFreqSeconds = 60;
                 monitorSshTunnelStatusFreqSeconds = 30;
                 break;
@@ -170,7 +170,7 @@ public final class Configuration {
                 monitorContainersStatusFreqSeconds = 10;
                 monitorRegistriesStatusFreqSeconds = 60;
                 getUsageDataFreqSeconds = 5;
-                dockerApiVersion = "1.23";
+                dockerApiVersion = "1.45";
                 setSystemTimeFreqSeconds = 60;
                 monitorSshTunnelStatusFreqSeconds = 10;
                 break;
@@ -1369,12 +1369,12 @@ public final class Configuration {
         } catch (ConfigurationItemException e) {
             System.out.println("invalid configuration item(s).");
             System.out.println(e.getMessage());
-            System.out.println(ExceptionUtils.getFullStackTrace(e));
+            System.out.println(ExceptionUtils.getStackTrace(e));
             System.exit(1);
         } catch (Exception e) {
             System.out.println("Error while parsing " + Constants.CONFIG_SWITCHER_PATH);
             System.out.println(e.getMessage());
-            System.out.println(ExceptionUtils.getFullStackTrace(e));
+            System.out.println(ExceptionUtils.getStackTrace(e));
             System.exit(1);
         }
 
@@ -1383,12 +1383,12 @@ public final class Configuration {
         } catch (ConfigurationItemException e) {
             System.out.println("invalid configuration item(s).");
             System.out.println(e.getMessage());
-            System.out.println(ExceptionUtils.getFullStackTrace(e));
+            System.out.println(ExceptionUtils.getStackTrace(e));
             System.exit(1);
         } catch (Exception e) {
             System.out.println("Error while parsing " + Configuration.getCurrentConfigPath());
             System.out.println(e.getMessage());
-            System.out.println(ExceptionUtils.getFullStackTrace(e));
+            System.out.println(ExceptionUtils.getStackTrace(e));
             System.exit(1);
         }
 
