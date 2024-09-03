@@ -207,7 +207,7 @@ jobs:
           name: rpm-package
           path: packaging/iofog-agent/iofog-agent-${{ steps.sub.outputs.result }}-1.noarch.rpm
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4.1.7
         with:
           name: deb-package
 
@@ -220,7 +220,7 @@ jobs:
           PACKAGECLOUD-DISTRIB: any/any
           PACKAGECLOUD-TOKEN: ${{ secrets.packagecloud_token }}
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4.1.7
         with:
           name: rpm-package
 
