@@ -21,7 +21,7 @@ import org.eclipse.iofog.field_agent.enums.VersionCommand;
 import org.eclipse.iofog.field_agent.exceptions.UnknownVersionCommandException;
 import org.eclipse.iofog.utils.logging.LoggingService;
 
-import javax.json.JsonObject;
+import jakarta.json.JsonObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;

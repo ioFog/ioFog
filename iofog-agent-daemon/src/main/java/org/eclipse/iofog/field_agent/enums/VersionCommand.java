@@ -14,7 +14,7 @@
 package org.eclipse.iofog.field_agent.enums;
 
 import org.eclipse.iofog.field_agent.exceptions.UnknownVersionCommandException;
-import javax.json.JsonObject;
+import jakarta.json.JsonObject;
 import java.util.Arrays;
 import java.util.Optional;
 

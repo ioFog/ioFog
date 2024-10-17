@@ -4,7 +4,7 @@ plugins {
 
 allprojects {
     group = 'org.eclipse'
-    version = '3.2.0'
+    version = '3.3.0'
 }
 
 subprojects {
@@ -16,10 +16,10 @@ subprojects {
         mavenLocal()
     }
 
-    //sourceCompatibility = JavaVersion.VERSION_11
-    //targetCompatibility = JavaVersion.VERSION_11
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+    //sourceCompatibility = 1.8
+    //targetCompatibility = 1.8
 
     task sourcesJar(type: Jar) {
         from sourceSets.main.allJava

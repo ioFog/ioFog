@@ -19,7 +19,7 @@ import org.eclipse.iofog.exception.AgentSystemException;
 import org.eclipse.iofog.exception.AgentUserException;
 import org.eclipse.iofog.utils.logging.LoggingService;
 
-import javax.json.*;
+import jakarta.json.*;
 import java.io.StringReader;
 import java.util.concurrent.Callable;
 

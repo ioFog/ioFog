@@ -21,7 +21,7 @@ import org.eclipse.iofog.gps.GpsMode;
 import org.eclipse.iofog.utils.configuration.Configuration;
 import org.eclipse.iofog.utils.logging.LoggingService;
 
-import javax.json.*;
+import jakarta.json.*;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;

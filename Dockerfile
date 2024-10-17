@@ -1,7 +1,7 @@
 FROM docker.io/library/ubuntu:20.04 AS builder
 
 RUN apt-get update && \
-    apt-get install -y unzip apt-utils curl openjdk-8-jdk && \
+    apt-get install -y unzip apt-utils curl openjdk-11-jdk && \
     apt-get clean
 
 # 1- Define a constant with the version of gradle you want to install

@@ -19,7 +19,7 @@ import org.eclipse.iofog.utils.configuration.Configuration;
 import org.eclipse.iofog.utils.functional.Unit;
 import org.eclipse.iofog.utils.logging.LoggingService;
 
-import javax.json.JsonObject;
+import jakarta.json.JsonObject;
 import java.util.concurrent.CompletableFuture;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;

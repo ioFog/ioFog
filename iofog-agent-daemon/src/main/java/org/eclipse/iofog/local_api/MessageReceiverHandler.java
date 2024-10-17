@@ -20,7 +20,7 @@ import org.eclipse.iofog.message_bus.Message;
 import org.eclipse.iofog.message_bus.MessageBusUtil;
 import org.eclipse.iofog.utils.logging.LoggingService;
 
-import javax.json.*;
+import jakarta.json.*;
 import java.io.StringReader;
 import java.util.List;
 import java.util.concurrent.Callable;

@@ -8,9 +8,9 @@ configurations {
     extraLibs
 }
 dependencies {
-    compile 'org.slf4j:slf4j-nop:1.7.13'
+    compile 'org.slf4j:slf4j-nop:2.0.16'
     //implementation 'org.slf4j:slf4j-nop:1.7.13'
-	extraLibs ('javax.json:javax.json-api:1.0', 'org.glassfish:javax.json:1.1.4')
+	extraLibs ('jakarta.json:jakarta.json-api:2.1.3', 'org.eclipse.parsson:parsson:1.1.7')
 	configurations.compile.extendsFrom(configurations.extraLibs)
     //configurations.compileClasspath.extendsFrom(configurations.extraLibs)
 }

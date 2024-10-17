@@ -28,7 +28,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import javax.json.Json;
+import jakarta.json.Json;
 
 import java.text.SimpleDateFormat;
 import java.util.*;

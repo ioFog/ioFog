@@ -19,9 +19,9 @@ import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.Properties;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
 
 public class Client {
 

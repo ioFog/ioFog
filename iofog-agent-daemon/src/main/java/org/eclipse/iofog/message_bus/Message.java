@@ -15,8 +15,8 @@ package org.eclipse.iofog.message_bus;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
-import javax.json.Json;
-import javax.json.JsonObject;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
 
 import org.eclipse.iofog.exception.AgentSystemException;
 import org.eclipse.iofog.utils.BytesUtil;

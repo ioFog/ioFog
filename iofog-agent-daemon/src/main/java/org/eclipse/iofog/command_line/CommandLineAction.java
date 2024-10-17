@@ -21,7 +21,7 @@ import org.eclipse.iofog.utils.Constants.ConfigSwitcherState;
 import org.eclipse.iofog.utils.configuration.Configuration;
 import org.eclipse.iofog.utils.logging.LoggingService;
 
-import javax.json.JsonObject;
+import jakarta.json.JsonObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

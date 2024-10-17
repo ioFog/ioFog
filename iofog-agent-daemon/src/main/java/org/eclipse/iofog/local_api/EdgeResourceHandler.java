@@ -22,9 +22,9 @@ import org.eclipse.iofog.edge_resources.EdgeResourceManager;
 import org.eclipse.iofog.exception.AgentUserException;
 import org.eclipse.iofog.utils.logging.LoggingService;
 
-import javax.json.Json;
-import javax.json.JsonBuilderFactory;
-import javax.json.JsonObjectBuilder;
+import jakarta.json.Json;
+import jakarta.json.JsonBuilderFactory;
+import jakarta.json.JsonObjectBuilder;
 import java.util.List;
 import java.util.concurrent.Callable;
 

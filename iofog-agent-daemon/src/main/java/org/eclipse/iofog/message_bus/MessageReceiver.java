@@ -17,11 +17,11 @@ import org.eclipse.iofog.microservice.Microservice;
 import org.eclipse.iofog.local_api.MessageCallback;
 import org.eclipse.iofog.utils.logging.LoggingService;
 
-import javax.jms.MessageConsumer;
-import javax.jms.TextMessage;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
+import jakarta.jms.MessageConsumer;
+import jakarta.jms.TextMessage;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;

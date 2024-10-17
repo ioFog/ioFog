@@ -21,7 +21,7 @@ import org.eclipse.iofog.process_manager.DockerUtil;
 import org.eclipse.iofog.utils.Orchestrator;
 import org.eclipse.iofog.utils.logging.LoggingService;
 
-import javax.json.JsonObject;
+import jakarta.json.JsonObject;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;

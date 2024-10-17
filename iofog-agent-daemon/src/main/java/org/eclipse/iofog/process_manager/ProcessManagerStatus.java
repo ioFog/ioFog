@@ -15,9 +15,9 @@ package org.eclipse.iofog.process_manager;
 import org.eclipse.iofog.microservice.*;
 import org.eclipse.iofog.utils.Constants.LinkStatus;
 
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObjectBuilder;
+import jakarta.json.Json;
+import jakarta.json.JsonArrayBuilder;
+import jakarta.json.JsonObjectBuilder;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Locale;

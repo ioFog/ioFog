@@ -18,7 +18,7 @@ import org.eclipse.iofog.utils.Constants;
 import org.eclipse.iofog.utils.configuration.Configuration;
 
 
-import javax.json.*;
+import jakarta.json.*;
 import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
