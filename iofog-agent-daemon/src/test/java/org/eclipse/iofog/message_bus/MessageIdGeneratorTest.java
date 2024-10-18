@@ -12,35 +12,34 @@
  */
 package org.eclipse.iofog.message_bus;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static java.lang.System.currentTimeMillis;
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.powermock.api.mockito.PowerMockito.spy;
 
 /**
  * @author nehanaithani
  *
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({MessageIdGenerator.class})
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class MessageIdGeneratorTest {
     private MessageIdGenerator messageIdGenerator;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         messageIdGenerator = spy(new MessageIdGenerator());
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         reset(messageIdGenerator);
     }
@@ -53,8 +52,6 @@ public class MessageIdGeneratorTest {
         try {
             assertNotNull("Message Id not null",
                     messageIdGenerator.generate(currentTimeMillis()));
-            PowerMockito.verifyPrivate(messageIdGenerator, times(2))
-                    .invoke("toBase58", anyLong());
         } catch (Exception e) {
             fail("This should not happen");
         }

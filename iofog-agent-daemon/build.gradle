@@ -1,45 +1,48 @@
 plugins {
-    id "com.github.johnrengelman.shadow"
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
     id 'jacoco'
 }
 
 description = 'iofog-agent-daemon'
 
 dependencies {
-    compile 'com.github.docker-java:docker-java:3.4.0'
-    compile 'io.netty:netty-all:4.1.113.Final'
-    compile 'org.jboss.logmanager:jboss-logmanager:3.0.6.Final'
-    compile 'com.github.mwiede:jsch:0.2.20'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
-    compile 'org.apache.httpcomponents:httpmime:4.5.13'
-    compile 'junit:junit:4.13.2'
-    compile 'com.github.oshi:oshi-core:6.6.4'
-    compile 'org.slf4j:slf4j-nop:2.0.16'
-    compile 'org.apache.qpid:qpid-jms-client:2.6.0'
-    compile 'jakarta.jms:jakarta.jms-api:3.1.0'
-    compile 'jakarta.json:jakarta.json-api:2.1.3'
-    compile 'org.eclipse.parsson:parsson:1.1.7'
-    testCompile 'org.mockito:mockito-core:2.9.0'
-    testCompile 'org.powermock:powermock-module-junit4:2.0.2'
-    testCompile 'org.powermock:powermock-api-mockito2:2.0.2'
-    testCompile 'org.powermock:powermock-core:2.0.2'
-    //implementation 'com.github.docker-java:docker-java:3.4.0'
-    //implementation 'io.netty:netty-all:4.1.113.Final'
-    //implementation 'org.jboss.logmanager:jboss-logmanager:3.0.6.Final'
-    //implementation 'com.github.mwiede:jsch:0.2.20'
-    //implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
-    //implementation 'org.apache.httpcomponents:httpmime:4.5.13'
-    //implementation 'junit:junit:4.13.2'
-    //implementation 'com.github.oshi:oshi-core:6.6.4'
-    //implementation 'org.slf4j:slf4j-nop:2.0.16'
-    //implementation 'org.apache.qpid:qpid-jms-client:2.6.0'
-    //implementation 'jakarta.jms:jakarta.jms-api:3.1.0'
-    //implementation 'jakarta.json:jakarta.json-api:2.1.3'
-    //implementation 'org.eclipse.parsson:parsson:1.1.7'
-    //testImplementation 'org.mockito:mockito-core:2.9.0'
-    //testImplementation 'org.powermock:powermock-module-junit4:2.0.2'
-    //testImplementation 'org.powermock:powermock-api-mockito2:2.0.2'
-    //testImplementation 'org.powermock:powermock-core:2.0.2'
+    //compile 'com.github.docker-java:docker-java:3.4.0'
+    //compile 'io.netty:netty-all:4.1.113.Final'
+    //compile 'org.jboss.logmanager:jboss-logmanager:3.0.6.Final'
+    //compile 'com.github.mwiede:jsch:0.2.20'
+    //compile 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
+    //compile 'org.apache.httpcomponents:httpmime:4.5.13'
+    //compile 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    //compile 'com.github.oshi:oshi-core:6.6.4'
+    //compile 'org.slf4j:slf4j-nop:2.0.16'
+    //compile 'org.apache.qpid:qpid-jms-client:2.6.0'
+    //compile 'jakarta.jms:jakarta.jms-api:3.1.0'
+    //compile 'jakarta.json:jakarta.json-api:2.1.3'
+    //compile 'org.eclipse.parsson:parsson:1.1.7'
+    //testCompile 'org.mockito:mockito-core:5.4.0'
+    //testCompile 'org.powermock:powermock-module-junit4:2.0.2'
+    //testCompile 'org.powermock:powermock-api-mockito2:2.0.2'
+    //testCompile 'org.powermock:powermock-core:2.0.2'
+    implementation 'com.github.docker-java:docker-java:3.4.0'
+    implementation 'io.netty:netty-all:4.1.113.Final'
+    implementation 'org.jboss.logmanager:jboss-logmanager:3.0.6.Final'
+    implementation 'com.github.mwiede:jsch:0.2.20'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
+    implementation 'org.apache.httpcomponents:httpmime:4.5.13'
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    implementation 'com.github.oshi:oshi-core:6.6.4'
+    implementation 'org.slf4j:slf4j-nop:2.0.16'
+    implementation 'org.apache.qpid:qpid-jms-client:2.6.0'
+    implementation 'jakarta.jms:jakarta.jms-api:3.1.0'
+    implementation 'jakarta.json:jakarta.json-api:2.1.3'
+    implementation 'org.eclipse.parsson:parsson:1.1.7'
+    testImplementation 'org.mockito:mockito-core:5.4.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:3.11.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation 'org.testng:testng:7.7.0'
 }
 
 tasks.withType(JavaCompile) {
@@ -54,8 +57,15 @@ build {
     dependsOn shadowJar
 }
 
-task copyJar(type: Copy) {
-    from ("$buildDir/libs/") {
+test {
+    jvmArgs '--add-opens=java.base/java.util=ALL-UNNAMED', '--add-opens=java.base/java.util.stream=ALL-UNNAMED', '--add-opens=java.base/java.lang=ALL-UNNAMED'
+    useJUnitPlatform()
+}
+
+tasks.register('copy', Copy)
+copy {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from('build/libs/') {
         include "*-all.jar"
     }
     into file('../packaging/iofog-agent/usr/bin/')
@@ -71,43 +81,45 @@ jacoco {
     toolVersion = "0.8.11"
 }
 
-jacocoTestReport {
-    reports {
-        xml.enabled true
-        csv.enabled false
-        html.destination file("${buildDir}/reports/jacocoHtml")
-    }
-}
-
-project.ext.jacocoOfflineSourceSets = [ 'main' ]
-task doJacocoOfflineInstrumentation(dependsOn: [ classes, project.configurations.jacocoAnt ]) {
-    inputs.files classes.outputs.files
-    File outputDir = new File(project.buildDir, 'instrumentedClasses')
-    outputs.dir outputDir
-    doFirst {
-        project.delete(outputDir)
-        ant.taskdef(
-                resource: 'org/jacoco/ant/antlib.xml',
-                classpath: project.configurations.jacocoAnt.asPath,
-                uri: 'jacoco'
-        )
-        def instrumented = false
-        jacocoOfflineSourceSets.each { sourceSetName ->
-            if (file(sourceSets[sourceSetName].java.outputDir).exists()) {
-                def instrumentedClassedDir = "${outputDir}/${sourceSetName}"
-                ant.'jacoco:instrument'(destdir: instrumentedClassedDir) {
-                    fileset(dir: sourceSets[sourceSetName].java.outputDir, includes: '**/*.class')
-                }
-                sourceSets.test.runtimeClasspath -= files(sourceSets[sourceSetName].java.outputDir)
-                sourceSets.test.runtimeClasspath += files(instrumentedClassedDir)
-                instrumented = true
-            }
-        }
-        if (instrumented) {
-            test.jvmArgs += '-noverify'
-        }
-    }
-}
-
-test.dependsOn(doJacocoOfflineInstrumentation)
-test.finalizedBy jacocoTestReport
+//jacocoTestReport {
+//    reports {
+//        xml.required = true
+//        csv.required = true
+//        html.outputLocation file(layout.buildDirectory.dir("reports/jacocoHtml"))
+//        csv.outputLocation file(layout.buildDirectory.dir("reports/jacoco/jacoco.csv"))
+//    }
+//}
+//project.ext.jacocoOfflineSourceSets = [ 'main' ]
+//task doJacocoOfflineInstrumentation(dependsOn: [ classes, project.configurations.jacocoAnt ]) {
+//    inputs.files classes.outputs.files
+//    File outputDir = new File(project.buildDir, 'instrumentedClasses')
+//    outputs.dir outputDir
+//    doFirst {
+//        project.delete(outputDir)
+//        ant.taskdef(
+//                resource: 'org/jacoco/ant/antlib.xml',
+//                classpath: project.configurations.jacocoAnt.asPath,
+//                uri: 'jacoco'
+//        )
+//        def instrumented = false
+//        jacocoOfflineSourceSets.each { sourceSetName ->
+//            sourceSets[sourceSetName].output.classesDirs.each { classDir ->
+//                if (file(classDir).exists()) {
+//                    def instrumentedClassedDir = "${outputDir}/${sourceSetName}"
+//                    ant.'jacoco:instrument'(destdir: instrumentedClassedDir) {
+//                        fileset(dir: classDir, includes: '**/*.class')
+//                    }
+//                    sourceSets.test.runtimeClasspath -= files(classDir)
+//                    sourceSets.test.runtimeClasspath += files(instrumentedClassedDir)
+//                    instrumented = true
+//                }
+//            }
+//        }
+//        if (instrumented) {
+//            test.jvmArgs += '-noverify'
+//        }
+//    }
+//}
+//
+//test.dependsOn(doJacocoOfflineInstrumentation)
+//test.finalizedBy jacocoTestReport

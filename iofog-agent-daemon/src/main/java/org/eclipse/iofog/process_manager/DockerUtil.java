@@ -361,29 +361,18 @@ public class DockerUtil {
             return MicroserviceState.UNKNOWN;
         }
 
-        switch (containerState.getStatus().toLowerCase()) {
-            case "running":
-                return MicroserviceState.RUNNING;
-            case "create":
-                return MicroserviceState.CREATING;
-            case "attach":
-            case "start":
-                return MicroserviceState.STARTING;
-            case "restart":
-                return MicroserviceState.RESTARTING;
-            case "kill":
-            case "die":
-            case "stop":
-                return MicroserviceState.STOPPING;
-            case "destroy":
-                return MicroserviceState.DELETING;
-            case "exited":
-                return MicroserviceState.EXITING;
-            case "created":
-                return MicroserviceState.CREATED;
-        }
+        return switch (Objects.requireNonNull(containerState.getStatus()).toLowerCase()) {
+            case "running" -> MicroserviceState.RUNNING;
+            case "create" -> MicroserviceState.CREATING;
+            case "attach", "start" -> MicroserviceState.STARTING;
+            case "restart" -> MicroserviceState.RESTARTING;
+            case "kill", "die", "stop" -> MicroserviceState.STOPPING;
+            case "destroy" -> MicroserviceState.DELETING;
+            case "exited" -> MicroserviceState.EXITING;
+            case "created" -> MicroserviceState.CREATED;
+            default -> MicroserviceState.UNKNOWN;
+        };
 
-        return MicroserviceState.UNKNOWN;
     }
 
     public List<Container> getRunningContainers() {

@@ -44,12 +44,13 @@ jobs:
     - uses: actions/checkout@v3
     - uses: actions/setup-java@v3
       with:
-        java-version: '11'
+        java-version: '17'
         distribution: 'temurin'
 #        cache: 'gradle'
     - uses: gradle/gradle-build-action@v2
       with:
-        arguments: build copyJar
+        gradle-version: 8.4
+        arguments: build copy
 
     - name: 'Get Previous tag'
       id: previoustag
