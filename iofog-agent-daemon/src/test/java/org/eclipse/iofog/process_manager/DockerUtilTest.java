@@ -1,6 +1,6 @@
 /*
  * *******************************************************************************
- *  * Copyright (c) 2018-2024 Edgeworx, Inc.
+ *  * Copyright (c) 2023 Datasance Teknoloji A.S.
  *  *
  *  * This program and the accompanying materials are made available under the
  *  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -107,7 +107,7 @@ public class DockerUtilTest {
     MockedConstruction<MicroserviceStatus> microserviceStatusMockedConstruction;
     MockedConstruction<CountDownLatch> countDownLatchMockedConstruction;
     MockedConstruction<StatsCallback> statsCallbackMockedConstruction;
-
+    
     @BeforeEach
     public void setUp() throws Exception {
         dockerClientConfig = mock(DefaultDockerClientConfig.Builder.class);
@@ -170,7 +170,7 @@ public class DockerUtilTest {
         Mockito.when(dockerClientConfig.withApiVersion(anyString())).thenReturn(dockerClientConfig);
         Mockito.when(dockerClientConfig.build()).thenReturn(defaultDockerClientConfig);
         Mockito.when(Configuration.getDockerUrl()).thenReturn("url");
-        Mockito.when(Configuration.getDockerApiVersion()).thenReturn("1.2");
+        Mockito.when(Configuration.getDockerApiVersion()).thenReturn("1.45");
         Mockito.when(DockerClientBuilder.getInstance(any(DockerClientConfig.class))).thenReturn(dockerClientBuilder);
         Mockito.when(dockerClientBuilder.build()).thenReturn(dockerClient);
         Mockito.when(dockerClient.eventsCmd()).thenReturn(eventsCmd);
@@ -197,12 +197,14 @@ public class DockerUtilTest {
         Mockito.when(pullImageCmd.exec(any())).thenReturn(pullImageResultCallback);
         Mockito.when(dockerClient.inspectContainerCmd(anyString())).thenReturn(inspectContainerCmd);
         Mockito.when(dockerClient.createContainerCmd(anyString())).thenReturn(createContainerCmd);
-        Mockito.when(createContainerCmd.withExposedPorts(any(ExposedPort.class))).thenReturn(createContainerCmd);
-        Mockito.when(createContainerCmd.withEnv(anyList())).thenReturn(createContainerCmd);
+        Mockito.when(createContainerCmd.withEnv(any(List.class))).thenReturn(createContainerCmd);
         Mockito.when(createContainerCmd.withName(any())).thenReturn(createContainerCmd);
         Mockito.when(createContainerCmd.withLabels(any())).thenReturn(createContainerCmd);
+        Mockito.when(createContainerCmd.withExposedPorts(any(ExposedPort.class))).thenReturn(createContainerCmd);
         Mockito.when(createContainerCmd.withVolumes(any(Volume.class))).thenReturn(createContainerCmd);
-        Mockito.when(createContainerCmd.withCmd(anyList())).thenReturn(createContainerCmd);
+        Mockito.when(createContainerCmd.withCmd(any(List.class))).thenReturn(createContainerCmd);
+        Mockito.when(createContainerCmd.withPlatform(anyString())).thenReturn(createContainerCmd);
+        Mockito.when(createContainerCmd.withUser(anyString())).thenReturn(createContainerCmd);
         Mockito.when(createContainerCmd.withHostConfig(any(HostConfig.class))).thenReturn(createContainerCmd);
         Mockito.when(createContainerCmd.exec()).thenReturn(createContainerResponse);
         Mockito.when(createContainerResponse.getId()).thenReturn(containerID);
@@ -220,7 +222,6 @@ public class DockerUtilTest {
         Mockito.when(containerState.getStatus()).thenReturn("UNKNOWN");
         Mockito.when(microservice.getContainerId()).thenReturn(containerID);
         Mockito.when(StatusReporter.setProcessManagerStatus()).thenReturn(processManagerStatus);
-        Mockito.when(processManagerStatus.getMicroserviceStatus(any())).thenReturn(microserviceStatus);
         Mockito.when(container.getNames()).thenReturn(containerNames);
         Mockito.when(container.getId()).thenReturn(containerID);
         Mockito.when(portMapping.getInside()).thenReturn(5112);

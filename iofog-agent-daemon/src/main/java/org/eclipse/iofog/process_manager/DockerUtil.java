@@ -1,6 +1,6 @@
 /*
  * *******************************************************************************
- *  * Copyright (c) 2018-2022 Edgeworx, Inc.
+ *  * Copyright (c) 2023 Datasance Teknoloji A.S.
  *  *
  *  * This program and the accompanying materials are made available under the
  *  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -23,7 +23,7 @@ import com.github.dockerjava.api.model.Ports.Binding;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientBuilder;
 import com.github.dockerjava.core.DockerClientConfig;
-import com.github.dockerjava.core.command.EventsResultCallback;
+import com.github.dockerjava.api.async.ResultCallback;
 import com.github.dockerjava.api.command.PullImageResultCallback;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -35,8 +35,8 @@ import org.eclipse.iofog.utils.Constants;
 import org.eclipse.iofog.utils.configuration.Configuration;
 import org.eclipse.iofog.utils.logging.LoggingService;
 
-import javax.json.Json;
-import javax.json.JsonObject;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
@@ -121,10 +121,10 @@ public class DockerUtil {
      */
     private void addDockerEventHandler() {
     	LoggingService.logDebug(MODULE_NAME , "Starting docker events handler");
-        dockerClient.eventsCmd().exec(new EventsResultCallback() {
+        dockerClient.eventsCmd().exec(new ResultCallback.Adapter<Event>() {
             @Override
             public void onNext(Event item) {
-                switch (Objects.requireNonNull(item.getType())) {
+                switch (item.getType()) {
                     case CONTAINER:
                     case IMAGE:
                         StatusReporter.setProcessManagerStatus().getMicroserviceStatus(item.getId()).setStatus(
@@ -717,9 +717,30 @@ public class DockerUtil {
             }
         }
 
+        if (microservice.getRuntime() != null && !microservice.getRuntime().isEmpty()) {
+            hostConfig.withRuntime(microservice.getRuntime());
+        }
+
+        if (microservice.getCdiDevs() != null && !microservice.getCdiDevs().isEmpty()) {
+            List<String> deviceIds = microservice.getCdiDevs();
+            DeviceRequest deviceRequest = new DeviceRequest()
+                    .withDriver("cdi")
+                    .withDeviceIds(deviceIds);
+            hostConfig.withDeviceRequests(Collections.singletonList(deviceRequest));
+        }
+
         if (microservice.getArgs() != null && microservice.getArgs().size() > 0) {
             cmd = cmd.withCmd(microservice.getArgs());
         }
+
+        if (microservice.getRunAsUser() != null && !microservice.getRunAsUser().isEmpty()) {
+            cmd = cmd.withUser(microservice.getRunAsUser());
+        }
+
+        if (microservice.getPlatform() != null && !microservice.getPlatform().isEmpty()) {
+            cmd = cmd.withPlatform(microservice.getPlatform());
+        }
+
         cmd = cmd.withHostConfig(hostConfig);
         CreateContainerResponse resp;
         try {

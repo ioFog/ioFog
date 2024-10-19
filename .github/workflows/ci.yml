@@ -1,0 +1,147 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+    tags: [v*]
+    paths-ignore:
+      - README.md
+      - CHANGELOG.md
+      - LICENSE
+  pull_request:
+    # Sequence of patterns matched against refs/heads
+    branches:
+      - main
+    paths-ignore:
+      - README.md
+      - CHANGELOG.md
+      - LICENSE
+env:
+  PROJECT: 'datasance-pot'
+  IMAGE_NAME: 'agent'
+  POTCTL_VERSION: '1.0.0'
+  CONTROLLER_IMAGE: 'ghcr.io/datasance/controller:latest'
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    permissions:
+      actions: write
+      checks: write
+      contents: write
+      deployments: write
+      id-token: write
+      issues: write
+      discussions: write
+      packages: write
+      pages: write
+      pull-requests: write
+      repository-projects: write
+      security-events: write
+      statuses: write
+    name: Build and Publish
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+#        cache: 'gradle'
+    - uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: 8.4
+        arguments: build copy
+
+    - name: 'Get Previous tag'
+      id: previoustag
+      uses: "WyriHaximus/github-action-get-previous-tag@v1"
+      with:
+        fallback: 0.0.0
+    - name: Set image tag
+      shell: bash
+      id: tags
+      run: |
+        if [[ ${{ github.ref_name }} =~ ^v.* ]] ; then
+          VERSION=${{ github.ref_name }}
+          echo "VERSION=${VERSION:1}" >> "${GITHUB_OUTPUT}"
+        else
+            VERSION=${{ steps.previoustag.outputs.tag }}
+            echo "VERSION=${VERSION:1}-${{ github.run_number }}" >> "${GITHUB_OUTPUT}"
+        fi
+
+    - name: Login to Github Container Registry
+      
+      uses: docker/login-action@v2
+      with:
+        registry: "ghcr.io"
+        username: ${{ github.actor }}
+        password: ${{ secrets.GH_PAT }}
+
+    - name: Build and Push to ghcr
+      
+      uses: docker/build-push-action@v3
+      id: build_push_ghcr
+      with:
+        file: Dockerfile
+        push: true
+        tags: |
+          ghcr.io/datasance/${{ env.IMAGE_NAME }}:${{ steps.tags.outputs.VERSION }}
+          ghcr.io/datasance/${{ env.IMAGE_NAME }}:latest
+          ghcr.io/datasance/${{ env.IMAGE_NAME }}:main
+
+    - name: Set up Ruby 3.1.4
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.1.4
+    - run: |
+        gem install --no-document fpm
+        fpm -h
+    - name: get gradle version
+      shell: bash
+      id: version
+      run: echo "version=$(./gradlew properties --no-daemon --console=plain -q | grep "^version:" | awk '{printf $2}')"  >> "${GITHUB_OUTPUT}"
+    - name: get package version
+      shell: bash
+      id: pkg_version
+      run: |
+        if [[ ${{ github.ref_name }} =~ ^v.* ]] ; then
+          echo "version=${{ steps.version.outputs.version }}" >> "${GITHUB_OUTPUT}"
+        else
+          echo "version=${{ steps.version.outputs.version }}-${{ github.run_number }}" >> "${GITHUB_OUTPUT}"
+        fi
+    - run: echo ${{ steps.version.outputs.version }}
+    - name: Create deb package
+      shell: bash
+      id: create_deb_package
+      run: |
+        cd packaging/iofog-agent
+        fpm -s dir -d 'openjdk-8-jdk | openjdk-11-jdk | openjdk-17-jdk' -d docker-ce  -t deb -n iofog-agent -v ${{ steps.pkg_version.outputs.version }} -a all --deb-no-default-config-files --after-install debian.sh --after-remove remove.sh --before-upgrade upgrade.sh --after-upgrade debian.sh etc usr
+        echo "pkg created"
+        ls
+    - name: Create rpm package
+      shell: bash
+      id: create_rpm_package
+      run: |
+        cd packaging/iofog-agent
+        fpm -s dir --depends java-17-openjdk -d docker-ce -t rpm -n iofog-agent -v ${{ steps.pkg_version.outputs.version }} -a all --rpm-os 'linux' --after-install rpm.sh --after-remove remove.sh --before-upgrade upgrade.sh --after-upgrade rpm.sh etc usr;
+        echo "pkg created"
+        ls
+
+    - uses: bluwy/substitute-string-action@v1
+      id: sub
+      with:
+        _input-text: ${{ steps.pkg_version.outputs.version }}
+        '-': _
+    - run: echo ${{ steps.sub.outputs.result }}
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: |
+          packaging/iofog-agent/iofog-agent_${{ steps.pkg_version.outputs.version }}_all.deb
+          packaging/iofog-agent/iofog-agent-${{ steps.pkg_version.outputs.version }}-1.noarch.rpm
+
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0

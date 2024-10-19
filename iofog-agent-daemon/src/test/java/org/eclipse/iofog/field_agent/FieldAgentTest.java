@@ -1,6 +1,6 @@
 /*
  * *******************************************************************************
- *  * Copyright (c) 2018-2024 Edgeworx, Inc.
+ *  * Copyright (c) 2023 Datasance Teknoloji A.S.
  *  *
  *  * This program and the accompanying materials are made available under the
  *  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -49,10 +49,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
 import javax.net.ssl.SSLHandshakeException;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -566,6 +566,9 @@ public class FieldAgentTest {
                     .add("rebuild", false)
                     .add("delete", false)
                     .add("rootHostAccess", false)
+                    .add("platform", "platform")
+                    .add("runtime", "runtime")
+                    .add("runAsUser", "runAsUser")
                     .add("deleteWithCleanup", false)
                     .add("registryId", 1)
                     .add("logSize", 2123l)

@@ -1,6 +1,6 @@
 /*
  * *******************************************************************************
- *  * Copyright (c) 2018-2022 Edgeworx, Inc.
+ *  * Copyright (c) 2023 Datasance Teknoloji A.S.
  *  *
  *  * This program and the accompanying materials are made available under the
  *  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -35,12 +35,13 @@ import org.eclipse.iofog.proxy.SshProxyManager;
 import org.eclipse.iofog.pruning.DockerPruningManager;
 import org.eclipse.iofog.status_reporter.StatusReporter;
 import org.eclipse.iofog.utils.Constants;
+import org.eclipse.iofog.utils.Constants.ControllerStatus;
 import org.eclipse.iofog.utils.Orchestrator;
 import org.eclipse.iofog.utils.configuration.Configuration;
 import org.eclipse.iofog.utils.functional.Pair;
 import org.eclipse.iofog.utils.logging.LoggingService;
 
-import javax.json.*;
+import jakarta.json.*;
 import javax.net.ssl.SSLHandshakeException;
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.HttpMethod;
@@ -923,6 +924,16 @@ public class FieldAgent implements IOFogModule {
         return jsonObj -> {
             Microservice microservice = new Microservice(jsonObj.getString("uuid"), jsonObj.getString("imageId"));
             microservice.setConfig(jsonObj.getString("config"));
+            if (!jsonObj.isNull("runAsUser")) {
+                microservice.setRunAsUser(jsonObj.getString("runAsUser"));
+            }
+            if (!jsonObj.isNull("platform")) {
+                microservice.setPlatform(jsonObj.getString("platform"));
+            }
+    
+            if (!jsonObj.isNull("runtime")) {
+                microservice.setRuntime(jsonObj.getString("runtime"));
+            }
             microservice.setRebuild(jsonObj.getBoolean("rebuild"));
             microservice.setRootHostAccess(jsonObj.getBoolean("rootHostAccess"));
             microservice.setRegistryId(jsonObj.getInt("registryId"));
@@ -986,6 +997,9 @@ public class FieldAgent implements IOFogModule {
 
             JsonValue argsValue = jsonObj.get("cmd");
             microservice.setArgs(getStringList(argsValue));
+
+            JsonValue cdiDevsValue = jsonObj.get("cdiDevices");
+            microservice.setCdiDevs(getStringList(cdiDevsValue));
 
             JsonValue extraHostsValue = jsonObj.get("extraHosts");
             microservice.setExtraHosts(getStringList(extraHostsValue));
