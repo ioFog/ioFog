@@ -1,6 +1,6 @@
 /*
  * *******************************************************************************
- *  * Copyright (c) 2018-2022 Edgeworx, Inc.
+ *  * Copyright (c) 2023 Datasance Teknoloji A.S.
  *  *
  *  * This program and the accompanying materials are made available under the
  *  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,9 +19,9 @@ import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.Properties;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
 
 public class Client {
 
@@ -228,7 +228,7 @@ public class Client {
 
     private static String version() {
         return "ioFog Agent " + getVersion() + " " +
-                "\nCopyright (C) 2018-2022 Edgeworx, Inc." +
+                "\nCopyright (c) 2023 Datasance Teknoloji A.S." +
                 "\nEclipse ioFog is provided under the Eclipse Public License (EPL2)" +
                 "\nhttps://www.eclipse.org/legal/epl-v20.html";
     }

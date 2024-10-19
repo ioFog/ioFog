@@ -1,6 +1,6 @@
 /*
  * *******************************************************************************
- *  * Copyright (c) 2018-2024 Edgeworx, Inc.
+ *  * Copyright (c) 2023 Datasance Teknoloji A.S.
  *  *
  *  * This program and the accompanying materials are made available under the
  *  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -11,29 +11,28 @@
  *
  */
 
-package org.eclipse.iofog.command_line;
+ package org.eclipse.iofog.command_line;
 
-import org.eclipse.iofog.exception.AgentUserException;
-import org.eclipse.iofog.field_agent.FieldAgent;
-import org.eclipse.iofog.gps.GpsMode;
-import org.eclipse.iofog.status_reporter.StatusReporter;
-import org.eclipse.iofog.utils.CmdProperties;
-import org.eclipse.iofog.utils.configuration.Configuration;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import javax.json.Json;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.Mockito.*;
-
+ import org.eclipse.iofog.exception.AgentUserException;
+ import org.eclipse.iofog.field_agent.FieldAgent;
+ import org.eclipse.iofog.gps.GpsMode;
+ import org.eclipse.iofog.status_reporter.StatusReporter;
+ import org.eclipse.iofog.utils.CmdProperties;
+ import org.eclipse.iofog.utils.configuration.Configuration;
+ import org.junit.jupiter.api.*;
+ import org.junit.jupiter.api.extension.ExtendWith;
+ import org.mockito.Mock;
+ import org.mockito.MockedStatic;
+ import org.mockito.Mockito;
+ import org.mockito.junit.jupiter.MockitoExtension;
+ import jakarta.json.Json;
+ import java.text.SimpleDateFormat;
+ import java.util.*;
+ 
+ import static org.junit.jupiter.api.Assertions.assertThrows;
+ import static org.mockito.ArgumentMatchers.anyBoolean;
+ import static org.mockito.ArgumentMatchers.anyMap;
+ import static org.mockito.Mockito.*;
 
 /**
  * @author nehanaithani
@@ -80,7 +79,7 @@ public class CommandLineActionTest {
                 .thenReturn(new HashMap<>())
                 .thenThrow(new Exception("item not found or defined more than once"));
 
-        Mockito.when(CmdProperties.getVersion()).thenReturn("1.2.2");
+        Mockito.when(CmdProperties.getVersion()).thenReturn("3.3.0");
         Mockito.when(CmdProperties.getVersionMessage()).thenReturn(version);
         Mockito.when(CmdProperties.getDeprovisionMessage()).thenReturn("Deprovisioning from controller ... %s");
         Mockito.when(CmdProperties.getProvisionMessage()).thenReturn("Provisioning with key \"%s\" ... Result: %s");
@@ -339,7 +338,7 @@ public class CommandLineActionTest {
 
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
 
-    private static final String status = "ioFog daemon                : " +
+    private String status = "ioFog daemon                : " +
             "STARTING\\nMemory Usage                :" +
             " about 0.00 MiB\\nDisk Usage                  : " +
             "about 0.00 MiB\\nCPU Usage                   : " +
@@ -351,12 +350,12 @@ public class CommandLineActionTest {
             "0.00 MB\\nSystem Available Memory     : " +
             "0.00 MB\\nSystem Total CPU            : 0.00 %";
 
-    private static final String version = "ioFog 3.0.0-dev \n" +
-            "Copyright (C) 2018-2024 Edgeworx, Inc. \n" +
+    private String version = "ioFog 1 \n" +
+            "Copyright (c) 2023 Datasance Teknoloji A.S. \n" +
             "Eclipse ioFog is provided under the Eclipse Public License 2.0 (EPL-2.0) \n" +
             "https://www.eclipse.org/legal/epl-v20.html";
 
-    private final String helpContent = "Usage 1: iofog-agent [OPTION]\\n" +
+    private String helpContent = "Usage 1: iofog-agent [OPTION]\\n" +
             "Usage 2: iofog-agent [COMMAND] <Argument>\\n" +
             "Usage 3: iofog-agent [COMMAND] [Parameter] <Value>\\n" +
             "\\n" +
@@ -411,7 +410,7 @@ public class CommandLineActionTest {
             "                                         storage\\n" +
             "                 -lc <#log files>        Set the number of log files to evenly\\n" +
             "                                         split the log storage limit\\n" +
-            "                 -ll <log level>         Set the standard logging levels that\\n" +
+            "                 -ll <log level>         Set the standard logging levels that\\n"+
             "                                         can be used to control logging output\\n" +
             "                 -sf <#seconds>          Set the status update frequency\\n" +
             "                 -cf <#seconds>          Set the get changes frequency\\n" +

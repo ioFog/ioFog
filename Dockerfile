@@ -30,18 +30,19 @@ RUN mkdir -p /usr/share/gradle /usr/share/gradle/ref \
   && ln -s /usr/share/gradle/gradle-${GRADLE_VERSION} /usr/bin/gradle
 
 # 5- Define environmental variables required by gradle
-ENV GRADLE_VERSION 8.4
-ENV GRADLE_HOME /usr/bin/gradle
-ENV GRADLE_USER_HOME /cache
-ENV PATH $PATH:$GRADLE_HOME/bin
+ENV GRADLE_VERSION=8.4
+ENV GRADLE_HOME=/usr/bin/gradle
+ENV GRADLE_USER_HOME=/cache
+ENV PATH=$PATH:$GRADLE_HOME/bin
 
 VOLUME $GRADLE_USER_HOME
 
 COPY . .
 
-RUN gradle build copy -x test --no-daemon
+RUN gradle build -x test --no-daemon
+RUN gradle copy -x test --no-daemon
 
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
+FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
 
 RUN true && \
     microdnf install -y curl ca-certificates java-17-openjdk-headless sudo shadow-utils && \
